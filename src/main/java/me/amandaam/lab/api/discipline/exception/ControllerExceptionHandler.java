@@ -1,6 +1,5 @@
-package me.amandaam.lab1.api.discipline.exception;
+package me.amandaam.lab.api.discipline.exception;
 
-import me.amandaam.lab1.api.discipline.Discipline;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

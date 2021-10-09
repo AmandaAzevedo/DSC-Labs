@@ -1,4 +1,4 @@
-package me.amandaam.lab1.api.discipline;
+package me.amandaam.lab.api.discipline;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateNoteDTO implements Serializable {
-    private Double note;
+public class UpdateNameDTO implements Serializable {
+    private String name;
 }

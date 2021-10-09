@@ -1,5 +1,7 @@
-package me.amandaam.lab1.api.discipline;
+package me.amandaam.lab.api.discipline;
 
+import me.amandaam.lab.api.comment.CommentCreateDTO;
+import me.amandaam.lab.api.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,45 +14,35 @@ public class DisciplineController {
     @Autowired
     private DisciplineService disciplineService;
 
-    /*
-    OK
-     */
+    @Autowired
+    private CommentService commentService;
+
+
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public DisciplineDTO getDisciplineById(@PathVariable("id") Long id){
         return disciplineService.getDisciplineByID(id);
     }
 
-    /*
-    OK
-     */
+
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<DisciplineDTO> getAllDisciplines(){
         return disciplineService.getAllDisciplines();
     }
 
-    /*
-    OK
-     */
-    @GetMapping(value = "/ranking")
+    @GetMapping(value = "/ranking/notas")
     @ResponseStatus(code = HttpStatus.OK)
     public List<DisciplineDTO> getDisciplinesOrderedByGrade(){
         return disciplineService.getDisciplinesOrderedByGrade();
     }
 
-    /*
-    OK
-     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteDisciplineById(@PathVariable("id") Long id){
         disciplineService.deleteDiscipline(id);
     }
 
-    /*
-    OK
-     */
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public DisciplineDTO createDiscipline(@RequestBody DisciplineCreateDTO disciplineCreateDTO){
@@ -63,12 +55,28 @@ public class DisciplineController {
         return disciplineService.updateDisciplineName(id, name);
     }
 
-    /*
-    OK
-     */
     @PatchMapping (value = "/{id}/note")
     @ResponseStatus(code = HttpStatus.CREATED)
     public DisciplineDTO addNoteInDiscipline(@PathVariable("id") Long id, @RequestBody UpdateNoteDTO note){
         return disciplineService.addNewNote(id, note);
     }
+
+    @PatchMapping(value = "/likes/{id}")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public DisciplineDTO addLikeInDiscipline(@PathVariable("id") Long id, @RequestBody Long numLikes){
+        return disciplineService.addLikes(id, numLikes);
+    }
+
+    @GetMapping(value = "/ranking/likes")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<DisciplineDTO> getDisciplinesOrderedByLikes(){
+        return disciplineService.getDisciplinesOrderedByLikes();
+    }
+
+    @PutMapping(value = "/comentarios/{id}")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public DisciplineDTO addCommentInDiscipline(@PathVariable("id") Long disciplineId, @RequestBody CommentCreateDTO comment){
+        return commentService.addComment(disciplineId, comment);
+    }
+
 }

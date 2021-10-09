@@ -1,4 +1,4 @@
-package me.amandaam.lab1.api.discipline.exception;
+package me.amandaam.lab.api.discipline.exception;
 
 public class InvalidNoteException extends RuntimeException{
 
