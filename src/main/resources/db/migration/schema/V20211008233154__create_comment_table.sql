@@ -10,5 +10,8 @@ CREATE TABLE comment (
     id int8 NOT NULL DEFAULT nextval('comment_sequence'),
     content varchar(280) NOT NULL,
     discipline_id int8 NOT NULL ,
-    CONSTRAINT discipline_id_FK FOREIGN KEY (discipline_id) REFERENCES discipline(id)
+    CONSTRAINT discipline_id_FK FOREIGN KEY (discipline_id) REFERENCES discipline(id),
+    user_id int8 NOT NULL,
+    CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES user_system(id) ON DELETE CASCADE
+
 )

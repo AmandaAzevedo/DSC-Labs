@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import java.util.List;
 
 @RestController
@@ -57,14 +58,14 @@ public class DisciplineController {
 
     @PatchMapping (value = "/{id}/note")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public DisciplineDTO addNoteInDiscipline(@PathVariable("id") Long id, @RequestBody UpdateNoteDTO note){
-        return disciplineService.addNewNote(id, note);
+    public DisciplineDTO addNoteInDiscipline(@PathVariable("id") Long id, @RequestBody UpdateNoteDTO note, @RequestHeader("Authorization") String header) throws ServletException {
+        return disciplineService.addNewNote(id, note, header);
     }
 
     @PatchMapping(value = "/likes/{id}")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public DisciplineDTO addLikeInDiscipline(@PathVariable("id") Long id, @RequestBody Long numLikes){
-        return disciplineService.addLikes(id, numLikes);
+    public DisciplineDTO addLikeInDiscipline(@PathVariable("id") Long id, @RequestBody Long numLikes, @RequestHeader("Authorization") String header) throws ServletException {
+        return disciplineService.addLikes(id, numLikes, header);
     }
 
     @GetMapping(value = "/ranking/likes")
@@ -75,8 +76,8 @@ public class DisciplineController {
 
     @PutMapping(value = "/comentarios/{id}")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public DisciplineDTO addCommentInDiscipline(@PathVariable("id") Long disciplineId, @RequestBody CommentCreateDTO comment){
-        return commentService.addComment(disciplineId, comment);
+    public DisciplineDTO addCommentInDiscipline(@PathVariable("id") Long disciplineId, @RequestBody CommentCreateDTO comment, @RequestHeader("Authorization") String header) throws ServletException {
+        return commentService.addComment(disciplineId, comment, header);
     }
 
 }

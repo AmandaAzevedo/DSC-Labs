@@ -8,9 +8,13 @@ import me.amandaam.lab.api.discipline.exception.DisciplineNotFoundException;
 import me.amandaam.lab.api.discipline.exception.InvalidLikesNumberException;
 import me.amandaam.lab.api.discipline.exception.InvalidNameException;
 import me.amandaam.lab.api.discipline.exception.InvalidNoteException;
+import me.amandaam.lab.api.jwt.JwtService;
+import me.amandaam.lab.api.user.UserDTO;
+import me.amandaam.lab.api.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,10 @@ import java.util.Optional;
 public class DisciplineService {
     @Autowired
     private DisciplineRepository disciplineRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtService jwtService;
 
     public List<DisciplineDTO> getAllDisciplines() {
         List<Discipline> disciplines = disciplineRepository.findAll();
@@ -50,7 +58,10 @@ public class DisciplineService {
         return DisciplineDTO.convertToDisciplineDTO(d.get());
     }
 
-    public DisciplineDTO addNewNote(Long id, UpdateNoteDTO note) {
+    public DisciplineDTO addNewNote(Long id, UpdateNoteDTO note,String token) throws ServletException {
+        if (!userService.usuarioTemPermissao(token,jwtService.getSujeitoDoToken(token))) {
+            throw new ServletException("Usuario nao tem permissao");
+        }
         if (id < 0 || id == null) {
             throw new DisciplineNotFoundException("O ID " + id.toString() + " é inválido");
         }
@@ -112,7 +123,11 @@ public class DisciplineService {
         return disciplinesDTOS;
     }
 
-    public DisciplineDTO addLikes(Long id, Long likes) {
+
+    public DisciplineDTO addLikes(Long id, Long likes, String token) throws ServletException {
+        if (!userService.usuarioTemPermissao(token,jwtService.getSujeitoDoToken(token))) {
+            throw new ServletException("Usuario nao tem permissao");
+        }
         if (likes < 0 || likes == null){
             throw new InvalidLikesNumberException("O número de likes é inválido");
         }

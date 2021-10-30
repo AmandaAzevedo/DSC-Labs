@@ -2,6 +2,7 @@ package me.amandaam.lab.api.comment;
 
 import lombok.*;
 import me.amandaam.lab.api.discipline.Discipline;
+import me.amandaam.lab.api.user.User;
 
 import javax.persistence.*;
 
@@ -20,4 +21,6 @@ public class Comment {
     private String content;
     @ManyToOne()
     private Discipline discipline;
+    @ManyToOne
+    private User user;
 }

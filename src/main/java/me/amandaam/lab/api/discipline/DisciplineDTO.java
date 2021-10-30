@@ -17,6 +17,7 @@ public class DisciplineDTO implements Serializable {
     private List<CommentDTO> comments;
 
     public static DisciplineDTO convertToDisciplineDTO(Discipline d) {
-        return DisciplineDTO.builder().id(d.getId()).name(d.getName()).likes(d.getLikes()).note(d.getNote()).comments(CommentDTO.convertToCommentDTO(d.getComments())).build();
+        return DisciplineDTO.builder().id(d.getId()).name(d.getName()).likes(d.getLikes()).note(d.getNote())
+                .comments(d.getComments() != null ? CommentDTO.convertToCommentDTO(d.getComments()) : null).build();
     }
 }
